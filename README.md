@@ -2,13 +2,10 @@
 
 Simple exporter to expose metrics from the Brevo (formerly Sendinblue) API
 
-<img width="211" height="155" alt="image" src="https://github.com/user-attachments/assets/075740d9-94b3-4fb4-803e-4cbca64c8a13" />
-
 ## Rationale
 
-Because I use the Brevo free tier, I have a send limit of 300 emails per day. I created this very simple Prometheus exporter because I wanted to monitor the amount of e-mails sent/credits remaining and store the usage in a TSDB.
-
-Right now the credits remaining in the account is the only metric that's being exposed but issues/pull requests to expand the functionality are welcome.
+I fork this very simple Prometheus exporter because I wanted to monitor the amount of e-mails sent and store the usage in a TSDB.
+fork from https://github.com/lazaroblanc/brevo-exporter
 
 ## Usage
 
