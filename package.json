@@ -1,31 +1,37 @@
 {
-  "name": "brevo-exporter",
-  "version": "2.0.2",
-  "description": "Simple exporter to expose metrics from the Brevo (formerly Sendinblue) API",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/feiltom/brevo-exporter.git"
-  },
-  "keywords": [
-    "brevo",
-    "sendinblue",
-    "exporter",
-    "prometheus"
-  ],
-  "author": "Lázaro Blanc",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/feiltom/brevo-exporter/issues"
-  },
-  "homepage": "https://github.com/feiltom/brevo-exporter#readme",
-  "dependencies": {
-    "dotenv": "^16.0.3"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
-  }
+    "name": "brevo-exporter",
+    "version": "2.0.2",
+    "description": "Simple exporter to expose metrics from the Brevo (formerly Sendinblue) API",
+    "main": "dist/app.ts",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/app.js",
+        "dev": "nodemon --watch src --ext ts --exec ts-node src/app.ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/feiltom/brevo-exporter.git"
+    },
+    "keywords": [
+        "brevo",
+        "sendinblue",
+        "exporter",
+        "prometheus"
+    ],
+    "author": "Lázaro Blanc",
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/feiltom/brevo-exporter/issues"
+    },
+    "homepage": "https://github.com/feiltom/brevo-exporter#readme",
+    "dependencies": {
+        "dotenv": "^17.2.3"
+    },
+    "devDependencies": {
+        "@types/node": "^25.0.3",
+        "nodemon": "^2.0.22",
+        "typescript": "^5.5.4",
+        "ts-node": "^10.9.2"
+    }
 }

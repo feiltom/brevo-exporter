@@ -6,35 +6,28 @@
 
 ARG NODE_VERSION=18.12.1
 
-FROM node:${NODE_VERSION}-alpine
-
-# Use production node environment by default.
-ENV NODE_ENV production
-
-
+FROM node:${NODE_VERSION}-alpine AS build
 WORKDIR /usr/src/app
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.npm to speed up subsequent builds.
-# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
-# into this layer.
-COPY package.json .
-COPY package-lock.json .
+COPY package.json package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci
 
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
+COPY . .
+RUN npm run build
 
-# Run the application as a non-root user.
+FROM node:${NODE_VERSION}-alpine AS runtime
+ENV NODE_ENV=production
+WORKDIR /usr/src/app
+
+COPY package.json package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev
+
 USER node
 
-# Copy the rest of the source files into the image.
-COPY . .
+COPY --from=build /usr/src/app/dist ./dist
 
-# Expose the port that the application listens on.
 EXPOSE 3000
-
-# Run the application.
-CMD node index.js
+CMD ["node", "dist/app.js"]
 
 LABEL org.opencontainers.image.source=https://github.com/feiltom/brevo-exporter
 LABEL org.opencontainers.image.description="Simple exporter to expose metrics from the Brevo (formerly Sendinblue) API"
