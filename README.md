@@ -47,3 +47,4 @@ services:
 | Name          | Description                                               |
 |---------------|-----------------------------------------------------------|
 | brevo_credits | Number of credits remaining in the Brevo account per plan |
+| brevo_stats   | Stats of transactionnal mail                              |
