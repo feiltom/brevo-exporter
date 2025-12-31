@@ -41,19 +41,6 @@ const getBrevoAccountMetrics = async () => {
 
     console.log(jsonDataStats.reports[0]);
 
-    /*    
-        let plans = jsonData.plan.filter((plan) => {
-            return plan.creditsType == 'sendLimit';
-        })
-    
-        metric += '# TYPE brevo_credits gauge\n';
-        metric += '# HELP brevo_credits Number of credits remaining in the Brevo account per plan\n';
-    
-        plans.forEach(plan => {
-            metric += `brevo_credits{type="${plan.type}"} ${plan.credits}\n`;
-        });
-    */
-
     metric += `# TYPE brevo_stats gauge\n`;
 
     const stats = jsonDataStats.reports[0];

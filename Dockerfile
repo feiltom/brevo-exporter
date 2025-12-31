@@ -27,7 +27,7 @@ USER node
 COPY --from=build /usr/src/app/dist ./dist
 
 EXPOSE 3000
-CMD ["node", "dist/app.js"]
+CMD ["node", "dist/app.ts"]
 
 LABEL org.opencontainers.image.source=https://github.com/feiltom/brevo-exporter
 LABEL org.opencontainers.image.description="Simple exporter to expose metrics from the Brevo (formerly Sendinblue) API"
