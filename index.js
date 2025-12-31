@@ -42,7 +42,7 @@ async function getBrevoAccountMetrics() {
         headers: {
             'api-key': process.env.BREVO_API_KEY
         }
-    });
+    });   
     const jsonData = await response.json();
 
     console.log(jsonData);
@@ -58,6 +58,38 @@ async function getBrevoAccountMetrics() {
     plans.forEach(plan => {
         metric += `brevo_credits{type="${plan.type}"} ${plan.credits}\n`;
     });
+// mail metrics
+    const responseStats = await fetch('https://api.brevo.com/v3/smtp/statistics/reports?days=1', {
+        method: 'GET',
+        cache: 'no-cache',
+        headers: {
+            'api-key': process.env.BREVO_API_KEY
+        }
+    });   
+    const jsonDataStats = await responseStats.json();
+
+    console.log(jsonDataStats.reports[0]);
+
+/*    let plans = jsonData.plan.filter((plan) => {
+        return plan.creditsType == 'sendLimit';
+    })
+
+    metric += '# TYPE brevo_credits gauge\n';
+    metric += '# HELP brevo_credits Number of credits remaining in the Brevo account per plan\n';
+
+    plans.forEach(plan => {
+        metric += `brevo_credits{type="${plan.type}"} ${plan.credits}\n`;
+    });
+*/
+    metric += `# TYPE brevo_stats gauge\n`;
+    const stats=jsonDataStats.reports[0]
+    for(var attributename in stats){
+        if (attributename!='date'){
+            console.log(attributename+": "+stats[attributename]);
+            metric += `brevo_stats{type="${attributename}"} ${stats[attributename]}\n`;
+
+        }
+    }
 
     return metric;
 }
